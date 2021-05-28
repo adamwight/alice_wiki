@@ -27,23 +27,13 @@ defmodule Alice.Handlers.Wiki do
     |> String.trim()
   end
 
-  defp get_wiki(term) do
-    term
-    |> wiki_url
-    |> HTTPoison.get
-    |> handle_json
-  end
-
-  defp wiki_url(term) do
-    URI.encode("#{@url}?search=#{term}&action=opensearch&format=json")
-  end
-
-  defp handle_json({:ok, %{status_code: 200, body: body}}) do
-    {:ok, Poison.Parser.parse!(body)}
-  end
-
-  defp handle_json({_, %{status_code: _, body: body}}) do
-    {:error, Poison.Parser.parse!(body)}
+  def get_wiki(term) do
+    Wiki.Action.new(@url)
+    |> Wiki.Action.get(
+      action: "opensearch",
+      search: term
+    )
+    |> (&(&1.result)).()
   end
 
   defp build_reply({_, body}) do

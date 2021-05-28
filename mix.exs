@@ -31,7 +31,8 @@ defmodule AliceWiki.Mixfile do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:alice, "~> 0.3"},
+      {:alice, "~> 0.4.4"},
+      {:wiki_elixir, "~> 0.2"},
       {:ex_doc, ">= 0.0.0", only: :dev}
     ]
   end
